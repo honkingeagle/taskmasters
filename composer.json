@@ -6,10 +6,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "http-interop/http-factory-guzzle": "*",
         "laravel/framework": "^11.9",
+        "laravel/scout": "*",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "livewire/volt": "^1.0",
+        "meilisearch/meilisearch-php": "*",
         "wireui/heroicons": "^2.6",
         "wireui/wireui": "^2.1"
     },
@@ -38,8 +41,7 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi",
-            "@php artisan filament:upgrade"
+            "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
