@@ -3,17 +3,28 @@
 use App\Models\Assignment;
 use Livewire\Attributes\On;
 use Livewire\Volt\Component;
-use Livewire\Attributes\Computed;
 use App\Models\AssignmentStatus;
+use Livewire\Attributes\Computed;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 new class extends Component {
     public Collection $assignments;
 
+    public string $searchedWord = '';
+
     public function mount(): void
     {
         $this->getAssignments();
+    }
+
+    public function updatedSearchedWord(): void
+    {
+        if ($this->searchedWord){
+            $this->assignments = Assignment::search($this->searchedWord)->get();
+        } else {
+            $this->getAssignments();
+        }
     }
 
     #[Computed]
@@ -29,6 +40,13 @@ new class extends Component {
 }; ?>
 
 <div>
+    <div class="mx-2 my-8 md:max-w-[50%] md:mx-auto">
+        <x-input
+            right-icon="magnifying-glass"
+            placeholder="search"
+            wire:model.live.debounce.250ms='searchedWord'
+        />
+    </div>
     <div>
         @if ($this->assignments->isNotEmpty())
             <div>
