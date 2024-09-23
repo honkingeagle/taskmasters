@@ -32,15 +32,6 @@ new class extends Component {
         $this->statuses = AssignmentStatus::all();
     }
 
-    public function changeStatus(Assignment $assignment, $statusId): void
-    {
-        $this->authorize($assignment);
-
-        $assignment->update(['assignment_status_id' => $statusId]);
-
-        $this->getAssignments();
-    }
-
     public function delete(Assignment $assignment): void
     {
         $this->authorize($assignment);
@@ -115,16 +106,6 @@ new class extends Component {
 
                             <div class="p-1 bg-gray-100 rounded-md shadow">
                                 <x-dropdown>
-                                    {{-- <x-dropdown.header label="Status">
-                                        @foreach ($this->statuses as $status)
-                                            @if ($assignment->status->id !== $status->id)
-                                                <x-dropdown.item
-                                                    wire:click="changeStatus({{ $assignment->id }}, {{ $status->id }})"
-                                                    :label="$status->name" />
-                                            @endif
-                                        @endforeach
-                                    </x-dropdown.header> --}}
-
                                     <x-dropdown.header label="Actions">
                                         <x-dropdown.item :href="route('assignments.edit', $assignment->id)" label="Edit" wire:navigate />
                                         <x-dropdown.item wire:click="delete({{ $assignment->id }})" label="Delete"
