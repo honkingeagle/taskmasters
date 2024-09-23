@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Assignment extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = [
         'assignment_status_id',
@@ -26,6 +27,11 @@ class Assignment extends Model
     protected $casts = [
         'deadline' => 'datetime',
     ];
+
+    public function shouldBeSearchable(): bool
+    {
+        return $this->assignment_status_id === 1;
+    }
 
     public function user(): BelongsTo
     {
